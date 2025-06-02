@@ -24,28 +24,42 @@ export default function WeddingWebsite() {
     setIsSubmitting(true)
 
     try {
-      // Stuur data na Google Form
+      // Debug logging - kyk wat gestuur word
+      console.log("Sending form data:", formData)
+
       const formDataToSend = new FormData()
 
-      // Google Form veld IDs - jy moet hierdie vervang met jou werklike veld IDs
-      formDataToSend.append("entry.123456789", formData.name) // Naam van gas of paartjie
-      formDataToSend.append("entry.987654321", formData.phone) // Selfoon nommer
-      formDataToSend.append("entry.456789123", formData.attending) // Sal jy bywoon?
-      formDataToSend.append("entry.789123456", formData.comments) // Kommentaar
-      formDataToSend.append("entry.321654987", formData.songRequest) // Liedjie versoek
+      // VERVANG HIERDIE NOMMERS MET JOU WERKLIKE ENTRY IDs
+      formDataToSend.append("entry.1234567890", formData.name) // Vervang met jou werklike ID
+      formDataToSend.append("entry.0987654321", formData.phone) // Vervang met jou werklike ID
+      formDataToSend.append("entry.1122334455", formData.comments) // Vervang met jou werklike ID
+      formDataToSend.append("entry.5544332211", formData.songRequest) // Vervang met jou werklike ID
 
-      // Stuur na Google Form
-      const response = await fetch("https://docs.google.com/forms/d/e/1FAIpQLSfKYWa2Xp3jG9_EXAMPLE/formResponse", {
+      // Voeg bywoning status by kommentaar
+      const fullComments = `Bywoning: ${formData.attending}\n\nKommentaar: ${formData.comments}`
+      formDataToSend.set("entry.1122334455", fullComments)
+
+      // Debug logging - kyk wat in FormData is
+      console.log("FormData entries:")
+      for (const [key, value] of formDataToSend.entries()) {
+        console.log(key, value)
+      }
+
+      // VERVANG HIERDIE URL MET JOU WERKLIKE FORM ID
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfKYWa2Xp3jG9/formResponse"
+      console.log("Sending to URL:", formUrl)
+
+      const response = await fetch(formUrl, {
         method: "POST",
         mode: "no-cors",
         body: formDataToSend,
       })
 
-      // Omdat ons no-cors gebruik, kan ons nie die response lees nie
-      // Maar as daar geen error is nie, was dit suksesvol
+      console.log("Form submitted successfully")
       setSubmitMessage("Dankie! Jou RSVP is suksesvol gestuur.")
       setFormData({ name: "", phone: "", attending: "", comments: "", songRequest: "" })
     } catch (error) {
+      console.error("Error submitting form:", error)
       setSubmitMessage("Jammer, daar was 'n probleem. Probeer asseblief weer.")
     }
 
@@ -150,7 +164,7 @@ export default function WeddingWebsite() {
                   Nooitgedacht, Krugersdorp
                 </p>
                 <a
-                  href="https://maps.google.com/?q=Lieu+de+Grace+Venue+172B+College+Road+Nooitgedacht+Krugersdorp"
+                  href="https://maps.google.com/search/?api=1&query=Lieu+de+Grace+Venue+172B+College+Road+Nooitgedacht+Krugersdorp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-blue-700 hover:text-blue-900 mt-4 font-medium"
