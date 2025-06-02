@@ -1,6 +1,0 @@
-cd pad/na/jou/projek
-git init
-git remote add origin https://github.com/RoyHesri/liefderoesnie.git
-git add .
-git commit -m "Eerste weergawe van ons trou webwerf"
-git push -u origin main
