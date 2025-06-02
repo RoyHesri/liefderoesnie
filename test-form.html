@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Form Test - Campbell Troue</title>
+</head>
+<body>
+    <h2>Test Google Form Koppeling</h2>
+    
+    <!-- JOU KORREKTE FORM URL -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdq97Y8p7ocygSFhkl6WsB5YdNaPJaDYfb3SEgm7U9Q6iQfxg/formResponse" method="POST" target="_blank">
+        
+        <!-- VERVANG HIERDIE ENTRY IDs MET JOU WERKLIKE IDs -->
+        <p>
+            <label>Naam van gas of paartjie:</label><br>
+            <input name="entry.VERVANG_MET_NAAM_ID" value="Test Naam" required>
+        </p>
+        
+        <p>
+            <label>Selfoon nommer:</label><br>
+            <input name="entry.VERVANG_MET_SELFOON_ID" value="0123456789" required>
+        </p>
+        
+        <p>
+            <label>Kommentaar:</label><br>
+            <textarea name="entry.VERVANG_MET_KOMMENTAAR_ID">Test kommentaar - ignoreer asseblief</textarea>
+        </p>
+        
+        <p>
+            <label>Liedjie versoek:</label><br>
+            <input name="entry.VERVANG_MET_LIEDJIE_ID" value="Test liedjie">
+        </p>
+        
+        <p>
+            <button type="submit">Stuur Test</button>
+        </p>
+    </form>
+    
+    <hr>
+    <h3>Volgende Stappe:</h3>
+    <ol>
+        <li>Kry die entry IDs deur die "Get pre-filled link" metode te gebruik</li>
+        <li>Vervang elke "VERVANG_MET_..." met jou werklike entry IDs</li>
+        <li>Toets hierdie form</li>
+        <li>As dit werk, update die hoofkode</li>
+    </ol>
+</body>
+</html>

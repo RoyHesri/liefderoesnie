@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Apps Script Opstel Instruksies</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .step { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9; }
+        .code { background: #f5f5f5; padding: 10px; font-family: monospace; border-radius: 3px; }
+        .important { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Hoe om die "Script function not found" fout op te los</h1>
+    
+    <div class="important">
+        <strong>Belangrik:</strong> Jy moet die Google Apps Script kode opstel voordat die RSVP form sal werk.
+    </div>
+    
+    <div class="step">
+        <h3>Stap 1: Gaan na jou Google Apps Script</h3>
+        <p>Klik op hierdie skakel om terug te gaan na jou script:</p>
+        <p><a href="https://script.google.com/home/projects/1Bx..." target="_blank">Jou Google Apps Script Projek</a></p>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 2: Vervang die kode</h3>
+        <ol>
+            <li>Vee al die bestaande kode in die script editor uit</li>
+            <li>Kopieer die kode van die <code>google-apps-script-setup.js</code> lêer</li>
+            <li>Plak dit in die script editor</li>
+        </ol>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 3: Kry jou Google Sheet ID</h3>
+        <ol>
+            <li>Skep 'n nuwe Google Sheet of gebruik 'n bestaande een</li>
+            <li>Kopieer die Sheet ID uit die URL:</li>
+        </ol>
+        <div class="code">
+            https://docs.google.com/spreadsheets/d/<strong>JOU_SHEET_ID_HIER</strong>/edit
+        </div>
+        <p>Vervang "JOU_SHEET_ID" in die kode met hierdie ID</p>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 4: Stoor en herlaai</h3>
+        <ol>
+            <li>Klik op "Save" (Ctrl+S)</li>
+            <li>Klik op "Deploy" > "Manage deployments"</li>
+            <li>Klik op die "edit" ikoon (potlood)</li>
+            <li>Klik op "Deploy"</li>
+        </ol>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 5: Toets die RSVP form</h3>
+        <p>Gaan terug na jou troue website en probeer om 'n toets RSVP te stuur.</p>
+    </div>
+    
+    <div class="important">
+        <strong>Let wel:</strong> As jy steeds probleme ondervind, maak seker dat:
+        <ul>
+            <li>Die Google Sheet bestaan en jy het toegang daartoe</li>
+            <li>Die Sheet ID korrek is</li>
+            <li>Die script is gestoor en herlaai</li>
+        </ul>
+    </div>
+</body>
+</html>

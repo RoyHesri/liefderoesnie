@@ -1,12 +1,10 @@
-// Google Apps Script kode om in jou Google Sheets te plaas
-// Gaan na script.google.com en skep 'n nuwe projek
-
 function doPost(e) {
   try {
     // Kry die data van die POST versoek
     const data = JSON.parse(e.postData.contents)
 
-    // Open jou Google Sheet (vervang met jou sheet ID)
+    // VERVANG "JOU_SHEET_ID" MET JOU WERKLIKE GOOGLE SHEET ID
+    // Byvoorbeeld: "1rEst8tQSe7FSvjisUv2F8ZlolPqMg5gBzJ7r6nzqPEY"
     const sheet = SpreadsheetApp.openById("JOU_SHEET_ID").getActiveSheet()
 
     // Voeg headers by as dit die eerste keer is

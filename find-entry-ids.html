@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vind Entry IDs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .step { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .code { background: #f5f5f5; padding: 10px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Hoe om Entry IDs te vind</h1>
+    
+    <div class="step">
+        <h3>Stap 1: Gaan na jou form</h3>
+        <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdq97Y8p7ocygSFhkl6WsB5YdNaPJaDYfb3SEgm7U9Q6iQfxg/viewform" target="_blank">Klik hier om jou form oop te maak</a></p>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 2: Inspect Element</h3>
+        <ol>
+            <li>Regs-klik op die <strong>"Naam van gas of paartjie"</strong> veld</li>
+            <li>Kies <strong>"Inspect"</strong> of <strong>"Inspect Element"</strong></li>
+            <li>Soek vir <code>name="entry.</code> in die HTML</li>
+            <li>Jy sal iets soos hierdie sien:</li>
+        </ol>
+        <div class="code">
+            &lt;input type="text" name="entry.123456789" ...&gt;
+        </div>
+        <p>Die nommer <strong>123456789</strong> is jou entry ID vir die naam veld.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 3: Herhaal vir elke veld</h3>
+        <ul>
+            <li><strong>Naam veld</strong>: entry.______</li>
+            <li><strong>Selfoon veld</strong>: entry.______</li>
+            <li><strong>Kommentaar veld</strong>: entry.______</li>
+            <li><strong>Liedjie veld</strong>: entry.______</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h3>Stap 4: Test jou IDs</h3>
+        <p>Sodra jy die IDs het, kan jy hierdie test form gebruik:</p>
+        
+        <!-- TEST FORM -->
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSdq97Y8p7ocygSFhkl6WsB5YdNaPJaDYfb3SEgm7U9Q6iQfxg/formResponse" method="POST" target="_blank">
+            <p>
+                <label>Naam (vervang die ID):</label><br>
+                <input name="entry.VERVANG_MET_NAAM_ID" value="Test Naam" placeholder="Vervang entry ID hier">
+            </p>
+            
+            <p>
+                <label>Selfoon (vervang die ID):</label><br>
+                <input name="entry.VERVANG_MET_SELFOON_ID" value="0123456789" placeholder="Vervang entry ID hier">
+            </p>
+            
+            <p>
+                <label>Kommentaar (vervang die ID):</label><br>
+                <textarea name="entry.VERVANG_MET_KOMMENTAAR_ID" placeholder="Vervang entry ID hier">Test kommentaar</textarea>
+            </p>
+            
+            <p>
+                <label>Liedjie (vervang die ID):</label><br>
+                <input name="entry.VERVANG_MET_LIEDJIE_ID" value="Test liedjie" placeholder="Vervang entry ID hier">
+            </p>
+            
+            <p>
+                <button type="submit">Stuur Test</button>
+            </p>
+        </form>
+    </div>
+    
+    <div class="step">
+        <h3>Hulp nodig?</h3>
+        <p>As jy sukkel om die entry IDs te kry, stuur vir my 'n screenshot van die "Inspect Element" venster wanneer jy op die naam veld klik.</p>
+    </div>
+</body>
+</html>

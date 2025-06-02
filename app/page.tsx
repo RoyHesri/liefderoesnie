@@ -1,352 +1,496 @@
 "use client"
-
-import type React from "react"
-
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Calendar, MapPin, Heart, ExternalLink } from "lucide-react"
 import { useState } from "react"
 
 export default function WeddingWebsite() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    attending: "",
-    comments: "",
-    songRequest: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState("")
+  const [currentPage, setCurrentPage] = useState("home")
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const guestList = [
+    "Kies jou naam",
+    "Anel en Danie",
+    "Anita en Kobus",
+    "Antoinette en Hennie",
+    "Arina en Francois",
+    "Belinda en Riaan",
+    "Bennie en Elmarie",
+    "Bernice en Deon",
+    "Betsie en Fanie",
+    "Brenda en Danie",
+    "Carien en Danie",
+    "Cecile en Hennie",
+    "Chantelle en Jaco",
+    "Charmaine en Kobus",
+    "Christa en Pieter",
+    "Christelle en Francois",
+    "Daleen en Johan",
+    "Danie en Elmarie",
+    "Deon en Annemarie",
+    "Desiree en Henk",
+    "Dina en Piet",
+    "Elma en Kobus",
+    "Elmarie en Danie",
+    "Elsa en Johan",
+    "Estelle en Francois",
+    "Ester en Piet",
+    "Francine en Deon",
+    "Gerda en Johan",
+    "Hanlie en Kobus",
+    "Hester en Danie",
+    "Ilse en Francois",
+    "Ina en Piet",
+    "Ingrid en Johan",
+    "Irene en Kobus",
+    "Jaco en Annemarie",
+    "Janine en Deon",
+    "Jeanette en Francois",
+    "Jolene en Piet",
+    "Juanita en Johan",
+    "Karen en Kobus",
+    "Karien en Danie",
+    "Karin en Francois",
+    "Leana en Piet",
+    "Leonie en Johan",
+    "Liezel en Kobus",
+    "Linda en Danie",
+    "Lizelle en Francois",
+    "Louise en Piet",
+    "Magda en Johan",
+    "Marelize en Kobus",
+    "Margie en Danie",
+    "Marie en Francois",
+    "Marinda en Piet",
+    "Marlene en Johan",
+    "Maryke en Kobus",
+    "Melanie en Danie",
+    "Michelle en Francois",
+    "Mieke en Piet",
+    "Mona en Johan",
+    "Nadine en Kobus",
+    "Natasha en Danie",
+    "Nicolene en Francois",
+    "Petro en Piet",
+    "Ria en Johan",
+    "Riana en Kobus",
+    "Ronel en Danie",
+    "Rozanne en Francois",
+    "Santie en Piet",
+    "Sarie en Johan",
+    "Sonja en Kobus",
+    "Sunette en Danie",
+    "Suretha en Francois",
+    "Suzette en Piet",
+    "Tania en Johan",
+    "Theresa en Kobus",
+    "Tina en Danie",
+    "Trudie en Francois",
+    "Ursula en Piet",
+    "Vanessa en Johan",
+    "Vicky en Kobus",
+    "Wilmien en Danie",
+    "Yolanda en Francois",
+    "Yvonne en Piet",
+  ]
 
-    try {
-      // Debug logging - kyk wat gestuur word
-      console.log("Sending form data:", formData)
-
-      const formDataToSend = new FormData()
-
-      // VERVANG HIERDIE NOMMERS MET JOU WERKLIKE ENTRY IDs
-      formDataToSend.append("entry.1234567890", formData.name) // Vervang met jou werklike ID
-      formDataToSend.append("entry.0987654321", formData.phone) // Vervang met jou werklike ID
-      formDataToSend.append("entry.1122334455", formData.comments) // Vervang met jou werklike ID
-      formDataToSend.append("entry.5544332211", formData.songRequest) // Vervang met jou werklike ID
-
-      // Voeg bywoning status by kommentaar
-      const fullComments = `Bywoning: ${formData.attending}\n\nKommentaar: ${formData.comments}`
-      formDataToSend.set("entry.1122334455", fullComments)
-
-      // Debug logging - kyk wat in FormData is
-      console.log("FormData entries:")
-      for (const [key, value] of formDataToSend.entries()) {
-        console.log(key, value)
-      }
-
-      // VERVANG HIERDIE URL MET JOU WERKLIKE FORM ID
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfKYWa2Xp3jG9/formResponse"
-      console.log("Sending to URL:", formUrl)
-
-      const response = await fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formDataToSend,
-      })
-
-      console.log("Form submitted successfully")
-      setSubmitMessage("Dankie! Jou RSVP is suksesvol gestuur.")
-      setFormData({ name: "", phone: "", attending: "", comments: "", songRequest: "" })
-    } catch (error) {
-      console.error("Error submitting form:", error)
-      setSubmitMessage("Jammer, daar was 'n probleem. Probeer asseblief weer.")
-    }
-
-    setIsSubmitting(false)
-  }
-
-  return (
-    <div className="min-h-screen relative" style={{ fontFamily: "'Cinzel', serif" }}>
-      {/* Background Pattern */}
+  const renderHomePage = () => (
+    <div className="min-h-screen relative">
+      {/* Delft Blue Background Pattern */}
       <div
-        className="fixed inset-0 z-0 opacity-10"
+        className="absolute inset-0 opacity-20"
         style={{
           backgroundImage: "url('/images/delft-wallpaper.jpeg')",
-          backgroundRepeat: "repeat",
           backgroundSize: "400px 400px",
+          backgroundRepeat: "repeat",
         }}
       />
 
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden z-10">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/verlowing.jpg"
-            alt="Roy and Hesri engagement photo"
-            fill
-            className="object-cover"
-            priority
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Navigation */}
+        <nav className="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-center space-x-8 py-4">
+              <button
+                onClick={() => setCurrentPage("home")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "home" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Tuis
+              </button>
+              <button
+                onClick={() => setCurrentPage("details")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "details" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Troue Besonderhede
+              </button>
+              <button
+                onClick={() => setCurrentPage("rsvp")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "rsvp" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                RSVP
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        {/* Hero Section */}
+        <div className="relative h-screen flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/couple-heart-photo.png')" }}
           />
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl mb-4 leading-tight font-light" style={{ fontFamily: "'Cinzel', serif" }}>
-            U word hartlik uitgenooi na die huweliksbevestiging van
-          </h1>
-          <h2
-            className="text-3xl md:text-5xl mb-4 text-blue-200 font-semibold"
-            style={{ fontFamily: "'Allura', cursive" }}
-          >
-            Roy Campbell en Hesri Hattingh
-          </h2>
-          <p className="text-xl md:text-2xl mb-8 font-light" style={{ fontFamily: "'Cinzel', serif" }}>
-            Sluit by ons aan terwyl ons ons liefdesverhaal vier
-          </p>
-          <a href="#rsvp">
-            <Button
-              size="lg"
-              className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 text-lg font-medium"
-              style={{ fontFamily: "'Cinzel', serif" }}
-            >
-              RSVP Nou
-            </Button>
-          </a>
-        </div>
-      </section>
-
-      {/* Wedding Details Section */}
-      <section className="py-20 bg-white/90 backdrop-blur-sm relative z-10">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2
-              className="text-4xl md:text-5xl text-gray-800 mb-4 font-light"
-              style={{ fontFamily: "'Cinzel', serif" }}
-            >
-              Troue Besonderhede
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="relative z-10 text-center text-white px-4">
+            <p className="text-xl md:text-2xl mb-8" style={{ fontFamily: "Cinzel, serif" }}>
+              U word hartlik uitgenooi na die huweliksbevestiging van
+            </p>
+            <h2 className="text-2xl md:text-3xl mb-8" style={{ fontFamily: "Allura, cursive" }}>
+              Roy Campbell en Hesri Hattingh
             </h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+            <p className="text-lg md:text-xl" style={{ fontFamily: "Cinzel, serif" }}>
+              30 Augustus 2025
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  const renderDetailsPage = () => (
+    <div className="min-h-screen relative">
+      {/* Delft Blue Background Pattern */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: "url('/images/delft-wallpaper.jpeg')",
+          backgroundSize: "400px 400px",
+          backgroundRepeat: "repeat",
+        }}
+      />
+
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Navigation */}
+        <nav className="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-center space-x-8 py-4">
+              <button
+                onClick={() => setCurrentPage("home")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "home" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Tuis
+              </button>
+              <button
+                onClick={() => setCurrentPage("details")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "details" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Troue Besonderhede
+              </button>
+              <button
+                onClick={() => setCurrentPage("rsvp")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "rsvp" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                RSVP
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <h1
+            className="text-5xl font-bold text-center mb-16 text-blue-800"
+            style={{ fontFamily: "Tangerine, cursive" }}
+          >
+            Troue Besonderhede
+          </h1>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Ceremony Details */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+              <h2 className="text-3xl font-bold mb-6 text-blue-800" style={{ fontFamily: "Cinzel, serif" }}>
+                Seremonie
+              </h2>
+              <div className="space-y-4 text-gray-700" style={{ fontFamily: "Cinzel, serif" }}>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Datum: Saterdag, 30 Augustus 2025</span>
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Tyd: 15:30</span>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-1 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <div>
+                    <span>Plek: Lieu de Grace venue</span>
+                    <br />
+                    <span className="text-sm">172B College road Nooitgedacht, Krugersdorp</span>
+                    <br />
+                    <a
+                      href="https://maps.google.com/?q=Lieu+de+Grace+venue+172B+College+road+Nooitgedacht+Krugersdorp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 underline text-sm"
+                    >
+                      Kyk op Google Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center mt-4">
+                <svg className="w-5 h-5 mr-3 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+                <span>Dress code: Semi-formeel</span>
+              </div>
+            </div>
+
+            {/* Reception Details */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+              <h2 className="text-3xl font-bold mb-6 text-blue-800" style={{ fontFamily: "Cinzel, serif" }}>
+                Ontvangs
+              </h2>
+              <div className="space-y-4 text-gray-700" style={{ fontFamily: "Cinzel, serif" }}>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Onthaal sal volg na Seremonie</span>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-1 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <div>
+                    <span>Plek: Lieu de Grace venue</span>
+                    <br />
+                    <span className="text-sm">172B College road Nooitgedacht, Krugersdorp</span>
+                    <br />
+                    <a
+                      href="https://maps.google.com/?q=Lieu+de+Grace+venue+172B+College+road+Nooitgedacht+Krugersdorp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 underline text-sm"
+                    >
+                      Kyk op Google Maps
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3 text-blue-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                  </svg>
+                  <span>Aandete, dans en fees!</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-blue-200 shadow-lg bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-8 text-center">
-                <Calendar className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-2xl text-gray-800 mb-2 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Wanneer
-                </h3>
-                <p className="text-gray-600 text-lg mb-2 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Saterdag, 30 Augustus 2025
-                </p>
-                <p className="text-gray-500" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Seremonie om 15:30
-                </p>
-                <p className="text-gray-500" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Ontvangs om te volg
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-blue-200 shadow-lg bg-white/95 backdrop-blur-sm">
-              <CardContent className="p-8 text-center">
-                <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-2xl text-gray-800 mb-2 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Waar
-                </h3>
-                <p className="text-gray-600 text-lg mb-2 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Lieu de Grâce Venue
-                </p>
-                <p className="text-gray-500" style={{ fontFamily: "'Cinzel', serif" }}>
-                  172B College Road
-                </p>
-                <p className="text-gray-500" style={{ fontFamily: "'Cinzel', serif" }}>
-                  Nooitgedacht, Krugersdorp
-                </p>
-                <a
-                  href="https://maps.google.com/search/?api=1&query=Lieu+de+Grace+Venue+172B+College+Road+Nooitgedacht+Krugersdorp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-blue-700 hover:text-blue-900 mt-4 font-medium"
-                  style={{ fontFamily: "'Cinzel', serif" }}
-                >
-                  Bekyk op Google Maps
-                  <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
-              </CardContent>
-            </Card>
+          {/* Gift Poem */}
+          <div className="mt-16 bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+            <h2 className="text-3xl font-bold mb-6 text-center text-blue-800" style={{ fontFamily: "Cinzel, serif" }}>
+              Geskenke
+            </h2>
+            <div className="text-center text-gray-700 leading-relaxed" style={{ fontFamily: "Cinzel, serif" }}>
+              <p className="mb-4">
+                Jou teenwoordigheid op ons spesiale dag
+                <br />
+                Is die grootste geskenk wat ons kan hê.
+                <br />
+                Maar as jy graag iets wil gee,
+                <br />
+                Sal 'n bydrae tot ons nuwe begin
+                <br />
+                Ons help om ons drome waar te maak.
+              </p>
+              <p className="text-sm italic">Kontant geskenke word met dankbaarheid ontvang.</p>
+            </div>
           </div>
 
-          <div className="mt-16 text-center">
-            <div className="bg-gradient-to-r from-blue-50/95 to-sky-50/95 backdrop-blur-sm rounded-lg p-8 max-w-2xl mx-auto shadow-lg border border-blue-200">
-              <h3 className="text-2xl text-gray-800 mb-4 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
-                Geskenke
-              </h3>
-              <div className="text-gray-600 leading-relaxed" style={{ fontFamily: "'Cinzel', serif" }}>
-                <p className="mb-2">Met jou teenwoordigheid is ons reeds geseënd,</p>
-                <p className="mb-2">maar 'n geldjie sal ons drome vir die toekoms voed.</p>
-                <p className="mb-2">'n Klein bydra sal ons reis saam versier,</p>
-                <p>dankie vir die liefde wat jy met ons deel hier.</p>
+          {/* Accommodation */}
+          <div className="mt-16 bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+            <h2 className="text-3xl font-bold mb-6 text-center text-blue-800" style={{ fontFamily: "Cinzel, serif" }}>
+              Akkomodasie naby
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6 text-gray-700" style={{ fontFamily: "Cinzel, serif" }}>
+              <div className="p-4 border border-blue-100 rounded-lg">
+                <h3 className="font-bold text-blue-800 mb-2">Country Park Guest House</h3>
+                <p>Kontak: 079 159 0594 / 083 256 7000</p>
+              </div>
+              <div className="p-4 border border-blue-100 rounded-lg">
+                <h3 className="font-bold text-blue-800 mb-2">Hakunamatata</h3>
+                <p>Kontak: 079 889 1909 / 079 899 1898</p>
+              </div>
+              <div className="p-4 border border-blue-100 rounded-lg">
+                <h3 className="font-bold text-blue-800 mb-2">Random Harvest Cottages</h3>
+                <p>Kontak: 072 562 3396</p>
+              </div>
+              <div className="p-4 border border-blue-100 rounded-lg">
+                <h3 className="font-bold text-blue-800 mb-2">Riverstone Lodge</h3>
+                <p>Kontak: 011 668 3111</p>
+              </div>
+              <div className="p-4 border border-blue-100 rounded-lg">
+                <h3 className="font-bold text-blue-800 mb-2">Heartly Manor</h3>
+                <p>Kontak: 082 548 0916</p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  )
 
-      {/* RSVP Section */}
-      <section id="rsvp" className="relative py-20 overflow-hidden z-10">
-        <div className="absolute inset-0 z-0">
-          <Image src="/images/couple-heart-photo.png" alt="Roy and Hesri couple photo" fill className="object-cover" />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
+  const renderRSVPPage = () => (
+    <div className="min-h-screen relative">
+      {/* Delft Blue Background Pattern */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: "url('/images/delft-wallpaper.jpeg')",
+          backgroundSize: "400px 400px",
+          backgroundRepeat: "repeat",
+        }}
+      />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl text-white mb-6 font-light" style={{ fontFamily: "'Cinzel', serif" }}>
-            Sal Julle By Ons Aansluit?
-          </h2>
-          <p className="text-xl text-white mb-8" style={{ fontFamily: "'Cinzel', serif" }}>
-            Julle teenwoordigheid sal ons spesiale dag nog meer betekenisvol maak
-          </p>
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-30"
+        style={{ backgroundImage: "url('/images/verlowing.jpg')" }}
+      />
 
-          <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl p-8 max-w-md mx-auto">
-            <h3 className="text-2xl text-gray-800 mb-6 font-medium" style={{ fontFamily: "'Cinzel', serif" }}>
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Navigation */}
+        <nav className="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-center space-x-8 py-4">
+              <button
+                onClick={() => setCurrentPage("home")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "home" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Tuis
+              </button>
+              <button
+                onClick={() => setCurrentPage("details")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "details" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Troue Besonderhede
+              </button>
+              <button
+                onClick={() => setCurrentPage("rsvp")}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  currentPage === "rsvp" ? "bg-blue-800 text-white" : "text-blue-800 hover:bg-blue-50"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                RSVP
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="max-w-2xl mx-auto px-4 py-16">
+          <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+            <h1
+              className="text-5xl font-bold text-center mb-8 text-blue-800"
+              style={{ fontFamily: "Tangerine, cursive" }}
+            >
               RSVP
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <select
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ fontFamily: "'Cinzel', serif" }}
-                required
+            </h1>
+
+            <p className="text-center text-gray-700 mb-8" style={{ fontFamily: "Cinzel, serif" }}>
+              Ons sien uit daarna om hierdie spesiale dag saam met jou te vier!
+            </p>
+
+            <div className="text-center">
+              <a
+                href="https://forms.gle/h5XKCfKYWa2Xp3jG9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-800 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
+                style={{ fontFamily: "Cinzel, serif" }}
               >
-                <option value="">Kies jou naam uit die lys</option>
-                <option value="Roy Campbell en Hesri Hattingh">Roy Campbell en Hesri Hattingh</option>
-                <option value="Hetta Hattingh">Hetta Hattingh</option>
-                <option value="Charlotte Campbell">Charlotte Campbell</option>
-                <option value="Frans Mienie">Frans Mienie</option>
-                <option value="Johan Hattingh en Ella Hattingh">Johan Hattingh en Ella Hattingh</option>
-                <option value="EJ Hattingh">EJ Hattingh</option>
-                <option value="Doret Du Plessis en Henning Du Plessis">Doret Du Plessis en Henning Du Plessis</option>
-                <option value="Jano Du Plessis en Lindre Grobler">Jano Du Plessis en Lindre Grobler</option>
-                <option value="Thys Hattingh en Irish Hattingh">Thys Hattingh en Irish Hattingh</option>
-                <option value="Josh Hattingh">Josh Hattingh</option>
-                <option value="MG Hattingh en Metgesel">MG Hattingh en Metgesel</option>
-                <option value="Corli Hattingh">Corli Hattingh</option>
-                <option value="Wian Smith en Andre Retief">Wian Smith en Andre Retief</option>
-                <option value="Reinhardt Hechter en Bernadine Hechter">Reinhardt Hechter en Bernadine Hechter</option>
-                <option value="Ricardo Botha en Chante Myburgh">Ricardo Botha en Chante Myburgh</option>
-                <option value="Eljane Campbell en Ethan Brasington">Eljane Campbell en Ethan Brasington</option>
-                <option value="Michele Clark en David Clark">Michele Clark en David Clark</option>
-                <option value="Lareishka Marais en Jacque Diedericks">Lareishka Marais en Jacque Diedericks</option>
-                <option value="Liani Glinister">Liani Glinister</option>
-                <option value="Dominique Waterboer en Metgesel">Dominique Waterboer en Metgesel</option>
-                <option value="Rohan Van der Westhuizen en Metgesel">Rohan Van der Westhuizen en Metgesel</option>
-                <option value="Shaun Hepburn en Metgesel">Shaun Hepburn en Metgesel</option>
-                <option value="Cobus Hattingh en Chantelle Hattingh">Cobus Hattingh en Chantelle Hattingh</option>
-                <option value="Corneli Grobler">Corneli Grobler</option>
-                <option value="Koos Hattingh en Engela Hattingh">Koos Hattingh en Engela Hattingh</option>
-                <option value="Olivia Odendaal en Metgesel">Olivia Odendaal en Metgesel</option>
-                <option value="Ansie Heinecke">Ansie Heinecke</option>
-                <option value="Hettie Du Toit">Hettie Du Toit</option>
-                <option value="Jacky Zeelie">Jacky Zeelie</option>
-                <option value="Kittie Blaauw">Kittie Blaauw</option>
-                <option value="Magriet Du Plessis">Magriet Du Plessis</option>
-                <option value="Mari Greef">Mari Greef</option>
-                <option value="Pieter Grobbelaar en Metgesel">Pieter Grobbelaar en Metgesel</option>
-                <option value="Chaney Eichhorn en Ernst Eichhorn">Chaney Eichhorn en Ernst Eichhorn</option>
-                <option value="Johanne Beyleveld en Bennie Beyleveld">Johanne Beyleveld en Bennie Beyleveld</option>
-                <option value="Lorisca Victor en Calvin Victor">Lorisca Victor en Calvin Victor</option>
-                <option value="Marianne Steenekamp en Jean Steenekamp">Marianne Steenekamp en Jean Steenekamp</option>
-                <option value="Rhuan Van der Vyver en Kayla Smuts">Rhuan Van der Vyver en Kayla Smuts</option>
-                <option value="Anchene Kriel en Andre Kriel">Anchene Kriel en Andre Kriel</option>
-                <option value="Tianie Barnard en Metgesel">Tianie Barnard en Metgesel</option>
-                <option value="Andre Du Plessis en Rochelle Du Plessis">Andre Du Plessis en Rochelle Du Plessis</option>
-                <option value="Bailey Locker en Metgesel">Bailey Locker en Metgesel</option>
-                <option value="Janco Saunders en Metgesel">Janco Saunders en Metgesel</option>
-                <option value="Leon Kruger">Leon Kruger</option>
-                <option value="Sunel Bezuidenhout">Sunel Bezuidenhout</option>
-                <option value="Martin Forbes en Metgesel">Martin Forbes en Metgesel</option>
-                <option value="Annie Brown en Ryno Brown">Annie Brown en Ryno Brown</option>
-                <option value="Michael Hilton en Jolene Hilton">Michael Hilton en Jolene Hilton</option>
-                <option value="Michelle Hilton">Michelle Hilton</option>
-                <option value="Mari Bradshaw en Shane Bradshaw">Mari Bradshaw en Shane Bradshaw</option>
-                <option value="Chivanu Botha">Chivanu Botha</option>
-              </select>
+                Klik hier om te RSVP
+              </a>
+            </div>
 
-              <input
-                type="tel"
-                placeholder="Jou Selfoon Nommer"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ fontFamily: "'Cinzel', serif" }}
-                required
-              />
+            <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800 text-center" style={{ fontFamily: "Cinzel, serif" }}>
+                <strong>Let wel:</strong> As jy 'n metgesel het, vul asseblief jou metgesel se naam en van in by die
+                kommentaar gedeelte.
+              </p>
+            </div>
 
-              <select
-                value={formData.attending}
-                onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ fontFamily: "'Cinzel', serif" }}
-                required
-              >
-                <option value="">Sal jy bywoon?</option>
-                <option value="Ja">Ja, ek sal daar wees!</option>
-                <option value="Nee">Jammer, kan nie maak nie</option>
-              </select>
+            <div className="mt-6 text-center text-gray-600" style={{ fontFamily: "Cinzel, serif" }}>
+              <p className="text-sm">
+                RSVP asseblief voor/op <strong>25 Julie 2025</strong>
+              </p>
+            </div>
 
-              <textarea
-                placeholder="Enige vrae of kommentaar? (Gaste met 'n metgesel, vul asseblief jou metgesel se naam en van hier in)"
-                value={formData.comments}
-                onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
-                style={{ fontFamily: "'Cinzel', serif" }}
-              ></textarea>
-
-              <input
-                type="text"
-                placeholder="Die liedjie wat jou op die dansbaan sal kry"
-                value={formData.songRequest}
-                onChange={(e) => setFormData({ ...formData, songRequest: e.target.value })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ fontFamily: "'Cinzel', serif" }}
-              />
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 font-medium"
-                style={{ fontFamily: "'Cinzel', serif" }}
-              >
-                {isSubmitting ? "Stuur..." : "Stuur RSVP"}
-              </Button>
-            </form>
-
-            {submitMessage && (
-              <div
-                className={`mt-4 p-3 rounded-lg ${submitMessage.includes("suksesvol") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
-                style={{ fontFamily: "'Cinzel', serif" }}
-              >
-                {submitMessage}
-              </div>
-            )}
+            <div className="mt-4 text-center">
+              <p className="text-2xl font-bold text-blue-800" style={{ fontFamily: "Allura, cursive" }}>
+                #liefderoesnie
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  )
 
-      {/* Footer */}
-      <footer className="bg-gray-800/95 backdrop-blur-sm text-white py-12 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <Heart className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-          <p className="text-lg mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
-            Dankie dat julle deel is van ons reis
-          </p>
-          <p className="text-gray-400" style={{ fontFamily: "'Cinzel', serif" }}>
-            Ons kan nie wag om saam met julle te vier nie!
-          </p>
-        </div>
-      </footer>
+  return (
+    <div className="font-sans">
+      {currentPage === "home" && renderHomePage()}
+      {currentPage === "details" && renderDetailsPage()}
+      {currentPage === "rsvp" && renderRSVPPage()}
     </div>
   )
 }
